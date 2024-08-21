@@ -1,0 +1,56 @@
+To set up a Spring Boot home controller with a welcome page, you'll need to follow these steps:
+
+Step 1: Create a new Spring Boot project
+Start by creating a new Spring Boot project using your preferred IDE or the Spring Initializr (https://start.spring.io/). Make sure to include the necessary dependencies, such as `spring-boot-starter-web`.
+
+Step 2: Create the Welcome Page
+Create a new HTML file named `welcome_page.html` in the `src/main/resources/templates` directory. This directory is the default location for Thymeleaf templates in a Spring Boot project. In this file, you can add the content you want to display on the welcome page. For example:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to My Website</title>
+</head>
+<body>
+    <h1>Welcome to My Website</h1>
+    <p>This is the home page of my website.</p>
+</body>
+</html>
+
+
+Step 3: Create the Home Controller
+Create a new Java class named `HomeController` in your project's source code directory (`src/main/java`). This class will serve as the controller for the home page. Here's an example of a basic `HomeController`:
+
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class HomeController {
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String home() {
+        return "welcome_page";
+    }
+}
+
+
+In the above code, the `@Controller` annotation marks the class as a Spring MVC controller, and the `@RequestMapping` annotation specifies the URL mapping for the `home()` method. Here, we're mapping the root URL ("/") to the `welcome_page` template.
+
+Step 4: Run the Application
+You can now run your Spring Boot application and access the welcome page by navigating to `http://localhost:8080` (assuming the default port). The `HomeController` will handle the request and return the `welcome_page` template, which will be rendered as the welcome page.
+
+That's it! You have set up a Spring Boot home controller with a welcome page.
+
+Once you have set up the home controller and the welcome page in your Spring Boot application, you can call the home controller URL by simply accessing the root URL of your application.
+
+Assuming you are running the application locally on your machine using the default port (8080), you can call the home controller URL by opening a web browser and entering the following URL:
+
+http://localhost:8080/
+
+When you access this URL, the home controller's `home()` method will be invoked, and it will return the `welcome_page` template. The template will then be rendered by Thymeleaf and displayed in your web browser.
+
+Alternatively, if you're making requests programmatically, you can use tools like cURL or an HTTP client library in your preferred programming language to send an HTTP GET request to the root URL of your application (`http://localhost:8080/`).
+
+Please note that the actual URL may vary depending on the configuration of your Spring Boot application, such as the port number or the context path. Make sure to adjust the URL accordingly if you have made any modifications to the default configuration.

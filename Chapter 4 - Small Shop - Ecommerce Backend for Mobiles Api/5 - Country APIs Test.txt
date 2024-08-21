@@ -1,0 +1,13 @@
+You can test the APIs using tools like Postman or cURL. Here are some sample requests:
+
+Get all countries: GET http://localhost:8080/api/countries
+
+Get a country by ID: GET http://localhost:8080/api/countries/{id}
+
+Create a new country: POST http://localhost:8080/api/countries
+Request body: {"name": "Country Name"}
+
+Update a country: PUT http://localhost:8080/api/countries/{id}
+Request body: {"name": "Updated Country Name"}
+
+Delete a country: DELETE http://localhost:8080/api/countries/{id}

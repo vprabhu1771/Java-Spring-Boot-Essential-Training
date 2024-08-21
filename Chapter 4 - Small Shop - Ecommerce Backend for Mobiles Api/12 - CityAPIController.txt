@@ -1,0 +1,86 @@
+package com.example.demo.api;
+
+import com.example.demo.entity.Category;
+import com.example.demo.entity.City;
+import com.example.demo.entity.Product;
+import com.example.demo.entity.State;
+import com.example.demo.repository.CategoryRepository;
+import com.example.demo.repository.CityRepository;
+import com.example.demo.repository.ProductRepository;
+import com.example.demo.repository.StateRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/cities")
+public class CityAPIController {
+    private final CityRepository cityRepository;
+
+    private final StateRepository stateRepository;
+
+    @Autowired
+    public CityAPIController(
+            CityRepository cityRepository,
+            StateRepository stateRepository
+    )
+    {
+        this.cityRepository = cityRepository;
+        this.stateRepository = stateRepository;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<City>> getAllCitys(
+            @RequestParam(required = false) Long stateId
+    ) {
+        List<City> citys;
+
+        if (stateId != null)
+        {
+            State state = stateRepository.findById(stateId)
+                    .orElseThrow(() -> new RuntimeException("State not found with id: " + stateId));
+
+            citys = cityRepository.findByState(state);
+        }
+        else
+        {
+            citys = cityRepository.findAll();
+        }
+        return ResponseEntity.ok(citys);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<City> getProductById(@PathVariable Long id) {
+        Optional<City> city = cityRepository.findById(id);
+        return city.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<City> createCity(@RequestBody City city) {
+        City createdCity = cityRepository.save(city);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdCity);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<City> updateCity(@PathVariable Long id, @RequestBody City city) {
+        if (!cityRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        city.setId(id);
+        City updatedCity = cityRepository.save(city);
+        return ResponseEntity.ok(updatedCity);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCity(@PathVariable Long id) {
+        if (!cityRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        cityRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+}

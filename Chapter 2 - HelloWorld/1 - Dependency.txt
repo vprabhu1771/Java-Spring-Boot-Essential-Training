@@ -1,0 +1,18 @@
+To use Thymeleaf in your Spring Boot project, you need to include the Thymeleaf dependency in your project's build configuration.
+
+If you are using Maven, you can add the following dependency to your `pom.xml` file:
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+
+If you are using Gradle, you can add the following dependency to your `build.gradle` file:
+
+implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+After adding the dependency, you need to rebuild your project or let your build tool resolve the new dependency.
+
+Once the Thymeleaf dependency is added, Spring Boot will automatically configure Thymeleaf as the default template engine and look for Thymeleaf templates in the `src/main/resources/templates` directory.
+
+You can then create your Thymeleaf templates with the `.html` extension in the `templates` directory and start using Thymeleaf's features for dynamic rendering of data in your views.

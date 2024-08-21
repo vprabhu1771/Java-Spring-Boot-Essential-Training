@@ -1,0 +1,22 @@
+To run a Spring Boot application using an IP address, you need to specify the `server.address` property in your application's configuration. Here's how you can do it:
+
+1. Open the `application.properties` or `application.yml` file in your Spring Boot project.
+
+2. For `application.properties`, add the following line and replace `your-ip-address` with the desired IP address:
+
+   ```properties
+   server.address=your-ip-address
+   ```
+
+   For `application.yml`, add the following lines:
+
+   ```yaml
+   server:
+     address: your-ip-address
+   ```
+
+3. Save the file.
+
+4. Now, when you run your Spring Boot application, it will bind to the specified IP address. You can access your application using that IP address in your web browser or send requests to it using tools like cURL or Postman.
+
+Please note that the IP address you specify should be a valid IP address accessible from the machine running the Spring Boot application. Make sure to replace `your-ip-address` with the actual IP address you want to use.

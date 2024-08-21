@@ -1,0 +1,32 @@
+api
+controller
+entity
+repository
+service
+
+
+Model or Enitity or Database Table Design
+
+Category
+
+Product
+
+Wish List
+
+Cart
+
+My Orders
+
+Profile
+
+Registration
+
+Login
+
+Logout
+
+Country
+
+State
+
+City

@@ -1,0 +1,4 @@
+Lombook
+Spring Web
+MySQL Driver
+Spring Data JPA

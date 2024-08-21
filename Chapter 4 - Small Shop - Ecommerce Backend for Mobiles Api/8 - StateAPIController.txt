@@ -1,0 +1,84 @@
+package com.example.demo.api;
+
+import com.example.demo.entity.Category;
+import com.example.demo.entity.Country;
+import com.example.demo.entity.Product;
+import com.example.demo.entity.State;
+import com.example.demo.repository.CountryRepository;
+import com.example.demo.repository.StateRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/states")
+public class StateAPIController {
+    private final StateRepository stateRepository;
+
+    private final CountryRepository countryRepository;
+
+    @Autowired
+    public StateAPIController(
+            StateRepository stateRepository,
+            CountryRepository countryRepository
+    )
+    {
+        this.stateRepository = stateRepository;
+        this.countryRepository = countryRepository;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<State>> getAllStates(
+            @RequestParam(required = false) Long countryId
+    ) {
+        List<State> states;
+
+        if (countryId != null)
+        {
+            Country country = countryRepository.findById(countryId)
+                    .orElseThrow(() -> new RuntimeException("Country not found with id: " + countryId));
+
+            states = stateRepository.findByCountry(country);
+        }
+        else
+        {
+            states = stateRepository.findAll();
+        }
+        return ResponseEntity.ok(states);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<State> getStateById(@PathVariable Long id) {
+        Optional<State> state = stateRepository.findById(id);
+        return state.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<State> createState(@RequestBody State state) {
+        State createdState = stateRepository.save(state);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdState);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<State> updateState(@PathVariable Long id, @RequestBody State state) {
+        if (!stateRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        state.setId(id);
+        State updatedState = stateRepository.save(state);
+        return ResponseEntity.ok(updatedState);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteState(@PathVariable Long id) {
+        if (!stateRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        stateRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+}

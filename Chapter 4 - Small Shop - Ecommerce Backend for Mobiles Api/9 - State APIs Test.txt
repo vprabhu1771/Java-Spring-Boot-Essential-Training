@@ -1,0 +1,15 @@
+You can test the APIs using tools like Postman or cURL. Here are some sample requests:
+
+Get all states: GET http://localhost:8080/api/states
+
+List states by country: GET http://localhost:8080/api/states?countryId={countryId}
+
+Get a state by ID: GET http://localhost:8080/api/states/{id}
+
+Create a new state: POST http://localhost:8080/api/states
+Request body: {"name": "State Name", "country": {"id": 1}}
+
+Update a state: PUT http://localhost:8080/api/states/{id}
+Request body: {"name": "Updated State Name", "country": {"id": 2}}
+
+Delete a state: DELETE http://localhost:8080/api/states/{id}

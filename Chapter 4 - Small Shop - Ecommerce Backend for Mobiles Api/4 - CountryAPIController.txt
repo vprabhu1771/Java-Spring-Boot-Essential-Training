@@ -1,0 +1,59 @@
+package com.example.demo.api;
+
+import com.example.demo.repository.CountryRepository;
+import com.example.demo.entity.Country;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/countries")
+public class CountryAPIController {
+    private final CountryRepository countryRepository;
+
+    @Autowired
+    public CountryAPIController(CountryRepository countryRepository) {
+        this.countryRepository = countryRepository;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Country>> getAllCountries() {
+        List<Country> countries = countryRepository.findAll();
+        return ResponseEntity.ok(countries);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Country> getCountryById(@PathVariable Long id) {
+        Optional<Country> country = countryRepository.findById(id);
+        return country.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<Country> createCountry(@RequestBody Country country) {
+        Country createdCountry = countryRepository.save(country);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdCountry);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Country> updateCountry(@PathVariable Long id, @RequestBody Country country) {
+        if (!countryRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        country.setId(id);
+        Country updatedCountry = countryRepository.save(country);
+        return ResponseEntity.ok(updatedCountry);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCountry(@PathVariable Long id) {
+        if (!countryRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        countryRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+}

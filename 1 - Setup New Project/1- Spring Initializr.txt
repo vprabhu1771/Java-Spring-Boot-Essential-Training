@@ -1,0 +1,47 @@
+Project
+
+Maven Project
+
+
+Language
+
+Java
+
+
+Dependencies ->	Add Dependencies CTRL + B
+
+Spring Web (WEB)
+
+Spring Data JPA (SQL)
+
+Thymeleaf (TEMPLATE ENGINES)
+
+MySQL Driver (SQL)
+
+
+
+
+Spring Boot
+
+2.3.4
+
+
+Project Metadata
+
+Group 		: com.example
+
+Artifact 	: demo
+
+Name 		: demo
+
+Description	: Demo project for Spring Boot
+
+Package name	: com.example.demo
+
+Packaging	: Jar
+
+Java		: 17
+
+
+
+Click GENERATE CTRL + ENTER
